@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "supervalidation-repos",
   "private": true,
   "scripts": {
     "setup": "lerna bootstrap",
