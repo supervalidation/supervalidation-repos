@@ -1,0 +1,59 @@
+{
+  "name": "supervalidatorsjs",
+  "version": "0.0.5-alpha.3",
+  "description": "Providing Validators for SuperValidationJS",
+  "main": "./index.js",
+  "typings": "./index.d.ts",
+  "scripts": {
+    "build": "npm run cleanup && npm run build-ts",
+    "build-es5": "npm run cleanup && npm run build-ts-es5",
+    "build-es6": "npm run cleanup && npm run build-ts-es6",
+    "pack": "npm run build && npm run aftertests",
+    "pack-es5": "npm run build-ts-es5 && npm run aftertests",
+    "pack-es6": "npm run build-ts-es6 && npm run aftertests",
+    "test": "npm run cleanup && npm run test-ts",
+    "test-cvr": "npm run cleanup && npm run test-cvr-ts",
+    "test-ts": "npm run build-ts && npm run test-all",
+    "test-cvr-ts": "npm run build-ts && npm run test-all-cvr",
+    "build-ts": "npm run tslint && tsc",
+    "build-ts-es5": "npm run tslint && tsc -p _tsconfigs/es5.tsconfig.json",
+    "build-ts-es6": "npm run tslint && tsc -p _tsconfigs/es6.tsconfig.json",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "tslint-fix": "tslint -c tslint.json -p tsconfig.json --fix",
+    "cleanup": "node _scripts/cleanup",
+    "aftertests": "node _scripts/aftertests",
+    "test-all": "npm run test-mocha",
+    "test-all-cvr": "npm run test-mocha-cvr",
+    "test-mocha": "mocha -r ts-node/register/transpile-only './src/**/*.spec.ts' --exit",
+    "test-mocha-cvr": "nyc mocha -r ts-node/register/transpile-only './src/**/*.spec.ts' --exit",
+    "coverage": "npm run coveralls",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "prepublishOnly": "npm run pack"
+  },
+  "author": "Architecode Corporation",
+  "license": "MIT",
+  "repository": "git+https://github.com/supervalidation/supervalidatorsjs",
+  "dependencies": {
+    "corevalidationjs": "^0.0.5-alpha.3"
+  },
+  "devDependencies": {
+    "@types/validator": "^13.0.0",
+    "archdevts": "20.5.1",
+    "validator": "^13.0.0"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/**/index.ts",
+      "src/**/*.spec.ts"
+    ],
+    "require": [
+      "ts-node/register/transpile-only"
+    ],
+    "all": true,
+    "sourceMap": true
+  },
+  "gitHead": "e447ce97a5fac7c92b6486f1460265efef70edee"
+}

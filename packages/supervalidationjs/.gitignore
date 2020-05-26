@@ -1,0 +1,9 @@
+# Folders
+/.nyc_output
+/node_modules
+/build
+/lib
+/typings
+
+# Files
+.DS_Store

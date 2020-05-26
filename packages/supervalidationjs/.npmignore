@@ -1,0 +1,15 @@
+# Folders 
+/.nyc_output
+/node_modules
+/_scripts
+/_tsconfigs
+/build
+/src
+
+# Files
+*.yml
+.gitignore
+
+README.md
+tsconfig.json
+tslint.json
