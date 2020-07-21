@@ -34,7 +34,7 @@
   "license": "MIT",
   "repository": "git+https://github.com/supervalidation/supervalidatorsjs",
   "dependencies": {
-    "corevalidationjs": "0.0.5-alpha.5"
+    "corevalidationjs": "^0.0.5-alpha.5"
   },
   "devDependencies": {
     "@types/validator": "13.1.0",
