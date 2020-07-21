@@ -1,6 +1,6 @@
 {
   "name": "supervalidationjs",
-  "version": "0.0.5-alpha.4",
+  "version": "0.0.5-alpha.5",
   "description": "Not just another Validation library!",
   "main": "./lib/index.js",
   "typings": "./typings/index.d.ts",
@@ -34,10 +34,10 @@
   "license": "MIT",
   "repository": "git+https://github.com/supervalidation/supervalidationjs",
   "dependencies": {
-    "corevalidationjs": "^0.0.5-alpha.4"
+    "corevalidationjs": "0.0.5-alpha.5"
   },
   "devDependencies": {
-    "archdevts": "20.5.1"
+    "archdevts": "20.7.1"
   },
   "nyc": {
     "extension": [
@@ -55,6 +55,5 @@
     ],
     "all": true,
     "sourceMap": true
-  },
-  "gitHead": "e447ce97a5fac7c92b6486f1460265efef70edee"
+  }
 }

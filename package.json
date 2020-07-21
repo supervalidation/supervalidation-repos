@@ -2,10 +2,12 @@
   "name": "supervalidation-repos",
   "private": true,
   "scripts": {
+    "init": "lerna init",
     "setup": "lerna bootstrap",
-    "release": "lerna publish"
+    "build": "lerna run build",
+    "release": "lerna publish --force-publish"
   },
   "devDependencies": {
-    "lerna": "^3.22.0"
+    "lerna": "3.22.1"
   }
 }

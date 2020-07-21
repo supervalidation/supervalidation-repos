@@ -1,5 +1,6 @@
 import { ConstraintsUtil } from "./ConstraintsUtil";
 import { UndefinedValidatorError } from "./Errors/UndefinedValidatorError";
+import { FailedValidateError } from "./Errors/FailedValidateError";
 import { IConstraint, IConstraints } from "./IConstraints";
 import { IValidationResult } from "./IValidationResult";
 import { IValidator } from "./IValidator";
@@ -9,13 +10,21 @@ const validate = (
   attributes: object,
   constraints: IConstraints,
   validators: { [name: string]: IValidator; },
+  options: {
+    isErrorThrown?: boolean;
+  } = {},
 ): IValidationResult => {
   const invalidAttributes = validateAttributes(attributes, constraints, validators, attributes);
+  const { isErrorThrown = false } = options;
 
   if (invalidAttributes === undefined) {
     return { isValid: true };
   } else {
-    return { isValid: false, invalidAttributes };
+    if (isErrorThrown) {
+      throw new FailedValidateError(invalidAttributes);
+    } else {
+      return { isValid: false, invalidAttributes };
+    }
   }
 };
 
