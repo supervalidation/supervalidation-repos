@@ -1,27 +1,29 @@
 import { ConstraintsUtil } from "./ConstraintsUtil";
 import { UndefinedValidatorError } from "./Errors/UndefinedValidatorError";
-import { FailedValidateError } from "./Errors/FailedValidateError";
 import { IConstraint, IConstraints } from "./IConstraints";
 import { IValidationResult } from "./IValidationResult";
 import { IValidator } from "./IValidator";
 import { ValidatorUtil } from "./ValidatorUtil";
+import { InvalidationsFlatter } from "./InvalidationFlatter";
+
+export interface IValidateOptions {
+  format?: "flat" | "detail";
+}
 
 const validate = (
   attributes: object,
   constraints: IConstraints,
   validators: { [name: string]: IValidator; },
-  options: {
-    isErrorThrown?: boolean;
-  } = {},
+  options: IValidateOptions = {},
 ): IValidationResult => {
   const invalidAttributes = validateAttributes(attributes, constraints, validators, attributes);
-  const { isErrorThrown = false } = options;
+  const { format = "detail" } = options;
 
   if (invalidAttributes === undefined) {
     return { isValid: true };
   } else {
-    if (isErrorThrown) {
-      throw new FailedValidateError(invalidAttributes);
+    if (format === "flat") {
+      return { isValid: false, invalidAttributes: InvalidationsFlatter(invalidAttributes) };
     } else {
       return { isValid: false, invalidAttributes };
     }

@@ -1,11 +1,17 @@
 import { InvalidationsFlatter } from "../InvalidationFlatter";
 
+const description = (invalidAttributes: { [key: string]: any; }) => InvalidationsFlatter(invalidAttributes).join(" | ");
+
 export class FailedValidateError extends Error {
-  invalidAttributes: any;
+  invalidAttributes: { [key: string]: any; };
+  description: string;
 
   constructor(invalidAttributes: { [key: string]: any; }) {
-    super(`INVALID CONSTRAINT -- ${InvalidationsFlatter(invalidAttributes)}`);
+    super();
+
     this.name = "FailedValidateError";
     this.invalidAttributes = invalidAttributes;
+    this.description = description(invalidAttributes);
+    this.message = `INVALID CONSTRAINT -- ${this.description}`;
   }
 }

@@ -4,5 +4,5 @@ export interface IValidationResult {
     [attribute: string]: {
       [validator: string]: string;
     },
-  };
+  } | string[];
 }

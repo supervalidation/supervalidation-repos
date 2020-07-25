@@ -2,8 +2,7 @@ import { expect } from "chai";
 import { isNullOrUndefined } from "util";
 import { IConstraint } from "./IConstraints";
 import { IValidator } from "./IValidator";
-import { ValidationUtil } from "./ValidationUtil";
-// import { FailedValidateError } from "./Errors/FailedValidateError";
+import { ValidationUtil, IValidateOptions } from "./ValidationUtil";
 
 const validators: { [validator: string]: IValidator } = {
   alwaysInvalid: {
@@ -467,7 +466,37 @@ describe("ValidationUtil.ts", () => {
       expect(result).to.deep.equal(expected);
     });
 
-    it("expect to validate invalid attributes with options, #1", () => {
+    it("expect to validate invalid attributes with format options, #1", () => {
+      // arranges
+      const attributes = {};
+      const constraints = {
+        email: {
+          isRequired: true,
+        },
+        name: {
+          fname: {
+            isRequired: true,
+          },
+          lname: {
+            isRequired: true,
+          },
+        },
+      };
+      const invalidAttributes = ["The email is required.", "The fname is required.", "The lname is required."];
+      const options: IValidateOptions = {
+        format: "flat",
+      };
+
+      // acts
+      const result = ValidationUtil.validate(attributes, constraints, validators, options);
+
+
+      // asserts
+      expect(result.isValid).to.equal(false);
+      expect(result.invalidAttributes).to.deep.equal(invalidAttributes);
+    });
+
+    it("expect to validate invalid attributes with format options, #2", () => {
       // arranges
       const attributes = {};
       const constraints = {
@@ -496,20 +525,17 @@ describe("ValidationUtil.ts", () => {
           },
         },
       };
-      const options = {
-        isErrorThrown: true,
+      const options: IValidateOptions = {
+        format: "detail",
       };
 
-      try {
-        // acts
-        ValidationUtil.validate(attributes, constraints, validators, options);
+      // acts
+      const result = ValidationUtil.validate(attributes, constraints, validators, options);
 
-      } catch (error) {
-        // asserts
-        expect(error.name).to.deep.equal("FailedValidateError");
-        expect(error.message).to.deep.equal("INVALID CONSTRAINT -- The email is required.,The fname is required.,The lname is required.");
-        expect(error.invalidAttributes).to.deep.equal(invalidAttributes);
-      }
+
+      // asserts
+      expect(result.isValid).to.equal(false);
+      expect(result.invalidAttributes).to.deep.equal(invalidAttributes);
     });
   });
 });
