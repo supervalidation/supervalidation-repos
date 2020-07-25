@@ -9,6 +9,10 @@ const validators: { [validator: string]: IValidator } = {
     message: () => "This is always invalid.",
     validate: () => false,
   },
+  alwaysValid: {
+    message: () => "This is always valid.",
+    validate: () => true,
+  },
   isRequired: {
     message: (name) => `The ${name} is required.`,
     validate: (value) => !isNullOrUndefined(value),
@@ -16,10 +20,141 @@ const validators: { [validator: string]: IValidator } = {
 };
 
 describe("ValidationUtil.ts", () => {
+  describe("#ValidationUtil.describe()", () => {
+    it("expect to describe constraints, #1", () => {
+      // arranges
+      const attributes = {
+        email: "one@email.com",
+        name: {
+          fname: "first name",
+          lname: "last name",
+        },
+      };
+      const constraints = {
+        email: {
+          isRequired: true,
+        },
+        name: {
+          fname: {
+            isRequired: true,
+          },
+          lname: {
+            isRequired: true,
+          },
+        },
+      };
+      const expected: any[] = [
+        {
+          attribute: {
+            key: "email",
+            value: "one@email.com",
+          },
+          validator: "isRequired",
+          rules: true,
+        }, {
+          attribute: {
+            key: "fname",
+            value: "first name",
+          },
+          validator: "isRequired",
+          rules: true,
+        }, {
+          attribute: {
+            key: "lname",
+            value: "last name",
+          },
+          validator: "isRequired",
+          rules: true,
+        },
+      ];
+
+      // acts
+      const result = ValidationUtil.describe(attributes, constraints);
+
+      // asserts
+      expect(result).to.deep.equal(expected);
+    });
+
+    it("expect to describe constraints, #2", () => {
+      // arranges
+      const attributes = {
+        email: "one@email.com",
+        name: {
+          fname: "first name",
+          lname: "last name",
+        },
+      };
+      const constraints = {
+        email: {
+          isRequired: true,
+          alwaysValid: {
+            rules: {
+              key: "value",
+            },
+          },
+        },
+        name: {
+          fname: {
+            isRequired: true,
+          },
+          lname: {
+            isRequired: true,
+            alwaysValid: true,
+          },
+        },
+      };
+      const expected: any[] = [
+        {
+          attribute: {
+            key: "email",
+            value: "one@email.com",
+          },
+          validator: "isRequired",
+          rules: true,
+        }, {
+          attribute: {
+            key: "email",
+            value: "one@email.com",
+          },
+          validator: "alwaysValid",
+          rules: {
+            key: "value",
+          },
+        }, {
+          attribute: {
+            key: "fname",
+            value: "first name",
+          },
+          validator: "isRequired",
+          rules: true,
+        }, {
+          attribute: {
+            key: "lname",
+            value: "last name",
+          },
+          validator: "isRequired",
+          rules: true,
+        }, {
+          attribute: {
+            key: "lname",
+            value: "last name",
+          },
+          validator: "alwaysValid",
+          rules: true,
+        },
+      ];
+
+      // acts
+      const result = ValidationUtil.describe(attributes, constraints);
+
+      // asserts
+      expect(result).to.deep.equal(expected);
+    });
+  });
+
   describe("#ValidationUtil.validateValue()", () => {
     it("expect to validate valid attributes", () => {
       // arranges
-      // TODO
       const name = "email";
       const value = "one@email.com";
       const constraint: IConstraint = {

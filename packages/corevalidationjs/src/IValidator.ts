@@ -1,4 +1,4 @@
-export interface IValidator<Rule = any, AttributeValue = any, Extension = any, Aggregate = object> {
+export interface IValidator<Rule = any, AttributeValue = any, Extension = any, Aggregate = { [key: string]: any; }> {
   message: (name: string, rules: Rule) => string;
   validate: (
     value: AttributeValue,

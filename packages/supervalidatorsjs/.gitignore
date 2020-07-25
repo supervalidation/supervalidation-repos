@@ -5,6 +5,7 @@
 
 /adapters
 /inEmailFormat
+/inStringLength
 /isRequired
 /typeOf
 

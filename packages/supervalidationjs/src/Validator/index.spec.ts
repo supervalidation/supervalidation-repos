@@ -1,12 +1,14 @@
 import { expect } from "chai";
 import { Validator } from "./index";
 
-describe("ValidatorUtil/index.ts tests", () => {
-  describe("#ValidatorUtil", () => {
-    it("expect to merge all validators", async () => {
+describe("Validator/index.ts tests", () => {
+  describe("#Validator", () => {
+    it("expect to have all Validator properties", async () => {
       // arranges
       const properties = [
+        "custom",
         "merge",
+        "ruleOf",
       ];
 
       // acts

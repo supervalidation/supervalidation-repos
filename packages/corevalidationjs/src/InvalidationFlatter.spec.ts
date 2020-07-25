@@ -36,6 +36,25 @@ describe("InvalidationsFlatter.ts tests", () => {
       expect(result).to.deep.equal(expected);
     });
 
+    it("expect to get an array of invalid messages", async () => {
+      // arranges
+      const invalidAttributes = {
+        propA: "invalid props",
+        propB: {
+          propB1: "invalid props",
+          propB2: "invalid props",
+        },
+        propC: "other invalid",
+      };
+      const expected = ["invalid props", "other invalid"];
+
+      // acts
+      const result = InvalidationsFlatter(invalidAttributes);
+
+      // asserts
+      expect(result).to.deep.equal(expected);
+    });
+
     it("expect to get an array of invalid messages with initial messages", async () => {
       // arranges
       const invalidAttributes = {
@@ -45,7 +64,7 @@ describe("InvalidationsFlatter.ts tests", () => {
           propB2: "invalid propB2",
         },
       };
-      const initialInvalidMessages = ["initial invalid message"];
+      const initialMessages = ["initial invalid message"];
       const expected = [
         "initial invalid message",
         "invalid propA",
@@ -54,7 +73,7 @@ describe("InvalidationsFlatter.ts tests", () => {
       ];
 
       // acts
-      const result = InvalidationsFlatter(invalidAttributes, initialInvalidMessages);
+      const result = InvalidationsFlatter(invalidAttributes, initialMessages);
 
       // asserts
       expect(result).to.deep.equal(expected);

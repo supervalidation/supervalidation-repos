@@ -10,6 +10,41 @@ export interface IValidateOptions {
   format?: "flat" | "detail";
 }
 
+interface IValidateDescription {
+  attribute: {
+    key: string;
+    value: any;
+  };
+  validator: string;
+  rules: any;
+}
+
+const describe = (attributes: object, constraints: IConstraints) => describeConstraints(attributes, constraints, []);
+
+const describeConstraints = (
+  attributes: object,
+  constraints: IConstraints,
+  initial: IValidateDescription[],
+): IValidateDescription[] => Object.keys(constraints).reduce((result, key) => {
+  const value = attributes[key];
+
+  if (ConstraintsUtil.isConstraint(constraints[key])) {
+    const constraint = constraints[key] as IConstraint;
+
+    Object.keys(constraint)
+      .map((validator) => ({
+        attribute: { key, value },
+        validator,
+        ...ConstraintsUtil.resolveValidatorOptions(constraint[validator]),
+      }))
+      .forEach((each) => result.push(each));
+
+      return result;
+  } else {
+    return describeConstraints(attributes[key], constraints[key] as IConstraints, result);
+  }
+}, initial);
+
 const validate = (
   attributes: object,
   constraints: IConstraints,
@@ -92,6 +127,7 @@ const validateValue = (
 };
 
 export const ValidationUtil = {
+  describe,
   validate,
   validateAttributes,
   validateValue,
