@@ -1,5 +1,4 @@
 import { IValidator } from "corevalidationjs";
-import { isNullOrUndefined } from "util";
 
 export type inEmailFormatRules = "*" | {
   domain: string | RegExp;
@@ -22,7 +21,7 @@ export const inEmailFormat: IValidator<inEmailFormatRules, string> = {
     }
   },
   validate: (value, rules) => {
-    if (isNullOrUndefined(value)) {
+    if (value === null || value === undefined) {
       return true;
     }
 

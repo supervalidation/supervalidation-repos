@@ -1,6 +1,6 @@
 {
   "name": "corevalidationjs",
-  "version": "0.0.5-alpha.4",
+  "version": "0.0.5-alpha.6",
   "description": "Providing Validation Core Library",
   "main": "./lib/index.js",
   "typings": "./typings/index.d.ts",
@@ -32,9 +32,9 @@
   },
   "author": "Architecode Corporation",
   "license": "MIT",
-  "repository": "git+https://github.com/supervalidation/corevalidationjs",
+  "repository": "git+https://github.com/supervalidation/supervalidation-repos",
   "devDependencies": {
-    "archdevts": "20.5.1"
+    "archdevts": "20.7.1"
   },
   "nyc": {
     "extension": [
@@ -52,6 +52,5 @@
     ],
     "all": true,
     "sourceMap": true
-  },
-  "gitHead": "e447ce97a5fac7c92b6486f1460265efef70edee"
+  }
 }

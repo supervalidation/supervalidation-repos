@@ -4,7 +4,9 @@
 /typings
 
 /adapters
+/either
 /inEmailFormat
+/inStringLength
 /isRequired
 /typeOf
 

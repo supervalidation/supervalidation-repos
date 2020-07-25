@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { merge } from "./merge";
 
-describe("Validators/merge.ts tests", () => {
-  describe("#Validators.merge()", () => {
+describe("Validator/merge.ts tests", () => {
+  describe("#Validator.merge()", () => {
     it("expect to merge all validators", async () => {
       // arranges
       const validators: any = {

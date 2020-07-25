@@ -1,6 +1,6 @@
 {
   "name": "supervalidatorsjs",
-  "version": "0.0.5-alpha.4",
+  "version": "0.0.5-alpha.6",
   "description": "Providing Validators for SuperValidationJS",
   "main": "./index.js",
   "typings": "./index.d.ts",
@@ -32,14 +32,14 @@
   },
   "author": "Architecode Corporation",
   "license": "MIT",
-  "repository": "git+https://github.com/supervalidation/supervalidatorsjs",
+  "repository": "git+https://github.com/supervalidation/supervalidation-repos",
   "dependencies": {
-    "corevalidationjs": "^0.0.5-alpha.4"
+    "corevalidationjs": "0.0.5-alpha.6"
   },
   "devDependencies": {
-    "@types/validator": "^13.0.0",
-    "archdevts": "20.5.1",
-    "validator": "^13.0.0"
+    "@types/validator": "13.1.0",
+    "archdevts": "20.7.1",
+    "validator": "13.1.1"
   },
   "nyc": {
     "include": [
@@ -54,6 +54,5 @@
     ],
     "all": true,
     "sourceMap": true
-  },
-  "gitHead": "e447ce97a5fac7c92b6486f1460265efef70edee"
+  }
 }

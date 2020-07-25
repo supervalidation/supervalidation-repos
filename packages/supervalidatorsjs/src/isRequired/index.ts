@@ -1,5 +1,4 @@
 import { IValidator } from "corevalidationjs";
-import { isNullOrUndefined } from "util";
 
 export type isRequiredRules = boolean;
 
@@ -9,7 +8,7 @@ export const isRequired: IValidator<isRequiredRules> = {
     if (rules === false) {
       return true;
     } else {
-      return !isNullOrUndefined(value);
+      return !(value === null || value === undefined);
     }
   },
 };

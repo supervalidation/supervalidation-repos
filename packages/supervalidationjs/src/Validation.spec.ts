@@ -32,16 +32,28 @@ describe("Validation.ts tests", () => {
   });
 
   describe("#setValidator() | getValidator()", () => {
+    it("expect to get an undefined", () => {
+      // arranges
+      const instance = Validation.getInstance();
+
+      // acts
+      const validator = instance.getValidator("test")
+
+      // asserts
+      expect(validator).to.equal(undefined);
+    });
+
     it("expect to set and get a validator", () => {
       // arranges
       const instance = Validation.getInstance();
       const validator: any = {};
-
-      // acts
       instance.setValidator("test", validator);
 
+      // acts
+      const result = instance.getValidator("test");
+
       // asserts
-      expect(instance.getValidator("test")).to.equal(validator);
+      expect(result).to.equal(validator);
     });
   });
 

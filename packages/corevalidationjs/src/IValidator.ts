@@ -1,9 +1,16 @@
-export interface IValidator<Rule = any, AttributeValue = any, Extension = any, Aggregate = object> {
-  message: (name: string, rules: Rule) => string;
+import { IValidateDescription } from "./IValidateDescription";
+
+export interface IValidator<Rules = any, AttributeValue = any, Extension = any, Aggregate = { [key: string]: any; }> {
+  message: (
+    name: string,
+    rules: Rules,
+    validateResult: boolean | string,
+  ) => string;
   validate: (
     value: AttributeValue,
-    rules: Rule,
+    rules: Rules,
     aggregate: Aggregate,
     ext: Extension,
-  ) => boolean;
+    descriptions: IValidateDescription[],
+  ) => boolean | string;
 }
