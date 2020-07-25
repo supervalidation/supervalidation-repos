@@ -1,39 +1,39 @@
 import { expect } from "chai";
 import { IValidator } from "corevalidationjs";
-import { ruleOf } from "./ruleOf";
+import { rulesOf } from "./rulesOf";
 
-describe("Validator/rule.ts tests", () => {
+describe("Validator/rulesOf.ts tests", () => {
   describe("#Validator.rule()", () => {
     it("expect to create a custom validator with properties", async () => {
       // arranges
-      const validator: IValidator<{ rule: string;}> = {
+      const validator: IValidator<{ rule: string; }> = {
         message: () => "",
         validate: () => true,
       };
 
       // acts
-      const result = ruleOf(validator);
+      const result = rulesOf(validator);
 
       // asserts
       expect(typeof result).to.equal("function");
     });
 
-    it("expect to create a rule from ruleOf()", async () => {
+    it("expect to create an options of validator rules from rulesOf()", async () => {
       // arranges
-      const validator: IValidator<{ rule: string;}> = {
+      const validator: IValidator<{ rule: string; }> = {
         message: () => "",
         validate: () => true,
       };
 
-      const rule = {
-        rule: "test",
+      const expected = {
+        rules: "test",
       };
 
       // acts
-      const result = ruleOf(validator)(rule);
+      const result = rulesOf(validator)({ rules: "test" });
 
       // asserts
-      expect(result).to.equal(rule);
+      expect(result).to.deep.equal(expected);
     });
   });
 });

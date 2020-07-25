@@ -1,6 +1,6 @@
 {
   "name": "supervalidationjs",
-  "version": "0.0.5-alpha.5",
+  "version": "0.0.5-alpha.6",
   "description": "Not just another Validation library!",
   "main": "./lib/index.js",
   "typings": "./typings/index.d.ts",
@@ -32,9 +32,9 @@
   },
   "author": "Architecode Corporation",
   "license": "MIT",
-  "repository": "git+https://github.com/supervalidation/supervalidationjs",
+  "repository": "git+https://github.com/supervalidation/supervalidation-repos",
   "dependencies": {
-    "corevalidationjs": "^0.0.5-alpha.5"
+    "corevalidationjs": "0.0.5-alpha.6"
   },
   "devDependencies": {
     "archdevts": "20.7.1"

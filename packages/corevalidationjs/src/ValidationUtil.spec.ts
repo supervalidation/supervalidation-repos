@@ -150,6 +150,55 @@ describe("ValidationUtil.ts", () => {
       // asserts
       expect(result).to.deep.equal(expected);
     });
+
+    it("expect to describe constraints with invalid attributes", () => {
+      // arranges
+      const attributes = {
+      };
+      const constraints = {
+        email: {
+          isRequired: true,
+        },
+        name: {
+          fname: {
+            isRequired: true,
+          },
+          lname: {
+            isRequired: true,
+          },
+        },
+      };
+      const expected: any[] = [
+        {
+          attribute: {
+            key: "email",
+            value: undefined,
+          },
+          validator: "isRequired",
+          rules: true,
+        }, {
+          attribute: {
+            key: "fname",
+            value: undefined,
+          },
+          validator: "isRequired",
+          rules: true,
+        }, {
+          attribute: {
+            key: "lname",
+            value: undefined,
+          },
+          validator: "isRequired",
+          rules: true,
+        },
+      ];
+
+      // acts
+      const result = ValidationUtil.describe(attributes, constraints);
+
+      // asserts
+      expect(result).to.deep.equal(expected);
+    });
   });
 
   describe("#ValidationUtil.validateValue()", () => {
@@ -162,7 +211,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const act = () => ValidationUtil.validateValue(name, value, constraint, {});
+      const act = () => ValidationUtil.validateValue(name, value, constraint, {}, []);
 
       // asserts
       expect(act).to.throw(Error, "UNDEFINED VALIDATOR");
@@ -177,7 +226,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateValue(name, value, constraint, validators);
+      const result = ValidationUtil.validateValue(name, value, constraint, validators, []);
 
       // asserts
       expect(result).to.equal(undefined);
@@ -197,7 +246,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateValue(name, value, constraint, validators);
+      const result = ValidationUtil.validateValue(name, value, constraint, validators, []);
 
       // asserts
       expect(result).to.deep.equal(expected);
@@ -222,7 +271,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateValue(name, value, constraint, validators);
+      const result = ValidationUtil.validateValue(name, value, constraint, validators, []);
 
       // asserts
       expect(result).to.deep.equal(expected);
@@ -247,7 +296,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateValue(name, value, constraint, arragedValidators);
+      const result = ValidationUtil.validateValue(name, value, constraint, arragedValidators, []);
 
       // asserts
       expect(result).to.deep.equal(expected);
@@ -269,7 +318,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateValue(name, value, constraint, validators);
+      const result = ValidationUtil.validateValue(name, value, constraint, validators, []);
 
       // asserts
       expect(result).to.deep.equal(expected);
@@ -290,7 +339,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateValue(name, value, constraint, validators);
+      const result = ValidationUtil.validateValue(name, value, constraint, validators, []);
 
       // asserts
       expect(result).to.deep.equal(expected);
@@ -311,7 +360,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateAttributes(attributes, constraints, validators);
+      const result = ValidationUtil.validateAttributes(attributes, constraints, validators, []);
 
       // asserts
       expect(result).to.equal(undefined);
@@ -341,7 +390,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateAttributes(attributes, constraints, validators);
+      const result = ValidationUtil.validateAttributes(attributes, constraints, validators, []);
 
       // asserts
       expect(result).to.equal(undefined);
@@ -370,7 +419,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateAttributes(attributes, constraints, validators);
+      const result = ValidationUtil.validateAttributes(attributes, constraints, validators, []);
 
       // asserts
       expect(result).to.deep.equal(expected);
@@ -398,7 +447,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateAttributes(attributes, constraints, validators);
+      const result = ValidationUtil.validateAttributes(attributes, constraints, validators, []);
 
       // asserts
       expect(result).to.deep.equal(expected);
@@ -426,7 +475,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateAttributes(attributes, constraints, validators);
+      const result = ValidationUtil.validateAttributes(attributes, constraints, validators, []);
 
       // asserts
       expect(result).to.deep.equal(expected);
@@ -463,7 +512,7 @@ describe("ValidationUtil.ts", () => {
       };
 
       // acts
-      const result = ValidationUtil.validateAttributes(attributes, constraints, validators);
+      const result = ValidationUtil.validateAttributes(attributes, constraints, validators, []);
 
       // asserts
       expect(result).to.deep.equal(expected);

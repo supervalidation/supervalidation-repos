@@ -8,7 +8,7 @@ describe("Validator/index.ts tests", () => {
       const properties = [
         "custom",
         "merge",
-        "ruleOf",
+        "rulesOf",
       ];
 
       // acts

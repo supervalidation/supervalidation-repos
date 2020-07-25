@@ -1,11 +1,11 @@
 import { custom } from "./custom";
 import { merge } from "./merge";
-import { ruleOf } from "./ruleOf";
+import { rulesOf } from "./rulesOf";
 
 export const Validator = {
   custom,
   merge,
-  ruleOf,
+  rulesOf,
 };
 
 Object.freeze(Validator);

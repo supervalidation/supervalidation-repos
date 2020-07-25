@@ -1,6 +1,7 @@
 import { ConstraintsUtil } from "./ConstraintsUtil";
 import { UndefinedValidatorError } from "./Errors/UndefinedValidatorError";
 import { IConstraint, IConstraints } from "./IConstraints";
+import { IValidateDescription } from "./IValidateDescription";
 import { IValidationResult } from "./IValidationResult";
 import { IValidator } from "./IValidator";
 import { ValidatorUtil } from "./ValidatorUtil";
@@ -10,19 +11,10 @@ export interface IValidateOptions {
   format?: "flat" | "detail";
 }
 
-interface IValidateDescription {
-  attribute: {
-    key: string;
-    value: any;
-  };
-  validator: string;
-  rules: any;
-}
-
 const describe = (attributes: object, constraints: IConstraints) => describeConstraints(attributes, constraints, []);
 
 const describeConstraints = (
-  attributes: object,
+  attributes: object = {},
   constraints: IConstraints,
   initial: IValidateDescription[],
 ): IValidateDescription[] => Object.keys(constraints).reduce((result, key) => {
@@ -39,7 +31,7 @@ const describeConstraints = (
       }))
       .forEach((each) => result.push(each));
 
-      return result;
+    return result;
   } else {
     return describeConstraints(attributes[key], constraints[key] as IConstraints, result);
   }
@@ -51,7 +43,8 @@ const validate = (
   validators: { [name: string]: IValidator; },
   options: IValidateOptions = {},
 ): IValidationResult => {
-  const invalidAttributes = validateAttributes(attributes, constraints, validators, attributes);
+  const descriptions = describe(attributes, constraints);
+  const invalidAttributes = validateAttributes(attributes, constraints, validators, descriptions, attributes);
   const { format = "detail" } = options;
 
   if (invalidAttributes === undefined) {
@@ -69,6 +62,7 @@ const validateAttributes = (
   attributes: object,
   constraints: IConstraints,
   validators: { [name: string]: IValidator; },
+  descriptions: IValidateDescription[],
   aggregate?: object,
 ): { [property: string]: any; } | undefined => {
   const aggregated = aggregate || attributes;
@@ -78,13 +72,13 @@ const validateAttributes = (
     const constraint = constraints[name];
 
     if (ConstraintsUtil.isConstraint(constraint)) {
-      const invalid = validateValue(name, value, constraint as IConstraint, validators, aggregated);
+      const invalid = validateValue(name, value, constraint as IConstraint, validators, descriptions, aggregated);
 
       if (invalid !== undefined) {
         result[name] = invalid;
       }
     } else {
-      const invalid = validateAttributes(value || {}, constraint as IConstraints, validators, aggregated);
+      const invalid = validateAttributes(value || {}, constraint as IConstraints, validators, descriptions, aggregated);
 
       if (invalid !== undefined) {
         result[name] = invalid;
@@ -102,6 +96,7 @@ const validateValue = (
   value: any,
   constraint: IConstraint,
   validators: { [name: string]: IValidator; },
+  descriptions: IValidateDescription[],
   aggregate?: object,
 ): { [name: string]: string; } | undefined => {
   const aggregated = aggregate || { [name]: value };
@@ -115,9 +110,11 @@ const validateValue = (
       throw new UndefinedValidatorError(key);
     }
 
-    if (!validator.validate(value, opts.rules, aggregated, opts.ext)) {
+    const validateResult = validator.validate(value, opts.rules, aggregated, opts.ext, descriptions);
+
+    if (validateResult !== true) {
       const message = opts.message || validator.message || ValidatorUtil.defaultMessage;
-      result[key] = message(name, opts.rules);
+      result[key] = message(name, opts.rules, validateResult);
     }
 
     return result;
