@@ -1,5 +1,6 @@
 import { expect } from "chai";
-import { isNullOrUndefined } from "util";
+import * as sinon from "sinon";
+import { UndefinedValidatorError } from "./Errors/UndefinedValidatorError";
 import { IConstraint } from "./IConstraints";
 import { IValidator } from "./IValidator";
 import { ValidationUtil, IValidateOptions } from "./ValidationUtil";
@@ -15,7 +16,7 @@ const validators: { [validator: string]: IValidator } = {
   },
   isRequired: {
     message: (name) => `The ${name} is required.`,
-    validate: (value) => !isNullOrUndefined(value),
+    validate: (value) => !(value === null || value === undefined),
   },
 };
 
@@ -230,6 +231,87 @@ describe("ValidationUtil.ts", () => {
 
       // asserts
       expect(result).to.equal(undefined);
+    });
+
+    it("expect to validate with constraint validate and default message", () => {
+      // arranges
+      const name = "email";
+      const value = undefined;
+      const constraint: IConstraint = {
+        notExist: {
+          rules: true,
+          validate: () => false,
+        },
+      };
+      const expected = {
+        notExist: "[email] is invalid.",
+      };
+
+      // acts
+      const result = ValidationUtil.validateValue(name, value, constraint, validators, []);
+
+      // asserts
+      expect(result).to.deep.equal(expected);
+    });
+
+    it("expect to validate with constraint validate and validate result message", () => {
+      // arranges
+      const name = "email";
+      const value = undefined;
+      const constraint: IConstraint = {
+        notExist: {
+          rules: true,
+          validate: () => "validate result",
+        },
+      };
+      const expected = {
+        notExist: "validate result",
+      };
+
+      // acts
+      const result = ValidationUtil.validateValue(name, value, constraint, validators, []);
+
+      // asserts
+      expect(result).to.deep.equal(expected);
+    });
+
+    it("expect to validate with constraint validate and constraint message", () => {
+      // arranges
+      const name = "email";
+      const value = undefined;
+      const constraint: any = {
+        notExist: {
+          rules: true,
+          validate: () => "validate result",
+          message: (...props: any[]) => "message result",
+        },
+      };
+      const messageSpy = sinon.spy(constraint.notExist, "message");
+      const expected = {
+        notExist: "message result",
+      };
+
+      // acts
+      const result = ValidationUtil.validateValue(name, value, constraint, validators, []);
+
+      // asserts
+      expect(result).to.deep.equal(expected);
+      expect(messageSpy.calledOnceWith(name, true, "validate result")).to.equal(true);
+    });
+
+    it("expect to throw an error when validator not found", () => {
+      // arranges
+      const name = "name";
+      const value = undefined;
+      const constraint: IConstraint = {
+        notExist: true,
+      };
+
+      // acts
+      const act = () => ValidationUtil.validateValue(name, value, constraint, validators, []);
+
+      // asserts
+      expect(act).to.throw(UndefinedValidatorError);
     });
 
     it("expect to validate an invalid value, #1", () => {
