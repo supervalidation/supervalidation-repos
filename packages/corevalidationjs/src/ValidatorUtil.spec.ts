@@ -8,10 +8,21 @@ describe("ValidatorUtil.ts", () => {
       const expected = "[test] is invalid.";
 
       // acts
-      const result = ValidatorUtil.defaultMessage("test");
+      const result = ValidatorUtil.defaultMessage("test", true, false);
 
       // asserts
       expect(result).to.equal(expected);
+    });
+
+    it("expect to get a validate message", () => {
+      // arranges
+      const validateResult = "expected result";
+
+      // acts
+      const result = ValidatorUtil.defaultMessage("test", true, validateResult);
+
+      // asserts
+      expect(result).to.equal(validateResult);
     });
   });
 
@@ -24,7 +35,10 @@ describe("ValidatorUtil.ts", () => {
       const expected = { validate, message };
 
       // acts
-      const result = ValidatorUtil.createValidator(validate, message);
+      const result = ValidatorUtil.createValidator({
+        message,
+        validate,
+      });
 
       // asserts
       expect(result).to.deep.equal(expected);
@@ -37,7 +51,7 @@ describe("ValidatorUtil.ts", () => {
       const expected = { validate, message: ValidatorUtil.defaultMessage };
 
       // acts
-      const result = ValidatorUtil.createValidator(validate);
+      const result = ValidatorUtil.createValidator({ validate });
 
       // asserts
       expect(result).to.deep.equal(expected);

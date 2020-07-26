@@ -84,10 +84,10 @@ describe("either.ts tests", () => {
         isValid: false,
         invalidAttributes: {
           valueA: {
-            either: "either [valueA | valueB] is invalid.",
+            either: "[valueA] is invalid in either rules.",
           },
           valueB: {
-            either: "either [valueA | valueB] is invalid.",
+            either: "[valueB] is invalid in either rules.",
           },
         },
       };

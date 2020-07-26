@@ -27,7 +27,7 @@ describe("Validator/custom.ts tests", () => {
       });
 
       // acts
-      const result = validator.message("test", undefined);
+      const result = validator.message("test", undefined, false);
 
       // asserts
       expect(result).to.equal("[test] is invalid.");

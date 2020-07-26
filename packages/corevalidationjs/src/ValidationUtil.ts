@@ -104,13 +104,14 @@ const validateValue = (
   const reduced = Object.keys(constraint).reduce((result: { [name: string]: string; }, key) => {
     const values = constraint[key];
     const opts = ConstraintsUtil.resolveValidatorOptions(values);
-    const validator = opts.validate ? ValidatorUtil.createValidator(opts.validate, opts.message) : validators[key];
+    const validator = validators[key] || {};
+    const Validate = opts.validate || validator.validate;
 
-    if (validator === undefined) {
+    if (Validate === undefined) {
       throw new UndefinedValidatorError(key);
     }
 
-    const validateResult = validator.validate(value, opts.rules, aggregated, opts.ext, descriptions);
+    const validateResult = Validate(value, opts.rules, aggregated, opts.ext, descriptions);
 
     if (validateResult !== true) {
       const message = opts.message || validator.message || ValidatorUtil.defaultMessage;
