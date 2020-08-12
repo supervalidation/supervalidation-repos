@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import * as sinon from "sinon";
+import { FailedValidateError } from "./Errors/FailedValidateError";
 import { UndefinedValidatorError } from "./Errors/UndefinedValidatorError";
 import { IConstraint } from "./IConstraints";
 import { IValidator } from "./IValidator";
@@ -802,6 +803,34 @@ describe("ValidationUtil.ts", () => {
       // asserts
       expect(result.isValid).to.equal(false);
       expect(result.invalidAttributes).to.deep.equal(invalidAttributes);
+    });
+
+    it("expect to validate invalid attributes with error thrown, #3", () => {
+      // arranges
+      const attributes = {};
+      const constraints = {
+        email: {
+          isRequired: true,
+        },
+        name: {
+          fname: {
+            isRequired: true,
+          },
+          lname: {
+            isRequired: true,
+          },
+        },
+      };
+      const options: IValidateOptions = {
+        format: "exception",
+      };
+
+      // acts
+      const act = () => ValidationUtil.validate(attributes, constraints, validators, options);
+
+
+      // asserts
+      expect(act).to.throw(FailedValidateError);
     });
   });
 });

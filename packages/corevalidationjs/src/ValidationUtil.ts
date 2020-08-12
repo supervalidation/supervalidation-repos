@@ -1,4 +1,5 @@
 import { ConstraintsUtil } from "./ConstraintsUtil";
+import { FailedValidateError } from "./Errors/FailedValidateError";
 import { UndefinedValidatorError } from "./Errors/UndefinedValidatorError";
 import { IConstraint, IConstraints } from "./IConstraints";
 import { IValidateDescription } from "./IValidateDescription";
@@ -8,7 +9,7 @@ import { ValidatorUtil } from "./ValidatorUtil";
 import { InvalidationsFlatter } from "./InvalidationFlatter";
 
 export interface IValidateOptions {
-  format?: "flat" | "detail";
+  format?: "flat" | "detail" | "exception";
 }
 
 const describe = (attributes: object, constraints: IConstraints) => describeConstraints(attributes, constraints, []);
@@ -43,14 +44,16 @@ const validate = (
   validators: { [name: string]: IValidator; },
   options: IValidateOptions = {},
 ): IValidationResult => {
+  const { format = "detail" } = options;
   const descriptions = describe(attributes, constraints);
   const invalidAttributes = validateAttributes(attributes, constraints, validators, descriptions, attributes);
-  const { format = "detail" } = options;
 
   if (invalidAttributes === undefined) {
     return { isValid: true };
   } else {
-    if (format === "flat") {
+    if (format === "exception") {
+      throw new FailedValidateError(invalidAttributes);
+    } else if (format === "flat") {
       return { isValid: false, invalidAttributes: InvalidationsFlatter(invalidAttributes) };
     } else {
       return { isValid: false, invalidAttributes };

@@ -5,5 +5,5 @@ export { IValidateDescription } from "./IValidateDescription";
 export { IValidationResult } from "./IValidationResult";
 export { IValidator } from "./IValidator";
 export { InvalidationsFlatter } from "./InvalidationFlatter";
-export { ValidationUtil } from "./ValidationUtil";
+export { ValidationUtil, IValidateOptions } from "./ValidationUtil";
 export { ValidatorUtil } from "./ValidatorUtil";
