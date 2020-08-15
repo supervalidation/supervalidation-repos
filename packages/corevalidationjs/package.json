@@ -1,6 +1,6 @@
 {
   "name": "corevalidationjs",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Providing Validation Core Library",
   "main": "./lib/index.js",
   "typings": "./typings/index.d.ts",

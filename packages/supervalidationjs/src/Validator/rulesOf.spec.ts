@@ -6,7 +6,7 @@ describe("Validator/rulesOf.ts tests", () => {
   describe("#Validator.rule()", () => {
     it("expect to create a custom validator with properties", async () => {
       // arranges
-      const validator: IValidator<{ rule: string; }> = {
+      const validator: IValidator<string> = {
         message: () => "",
         validate: () => true,
       };
@@ -20,7 +20,7 @@ describe("Validator/rulesOf.ts tests", () => {
 
     it("expect to create an options of validator rules from rulesOf()", async () => {
       // arranges
-      const validator: IValidator<{ rule: string; }> = {
+      const validator: IValidator<string> = {
         message: () => "",
         validate: () => true,
       };
@@ -30,7 +30,9 @@ describe("Validator/rulesOf.ts tests", () => {
       };
 
       // acts
-      const result = rulesOf(validator)({ rules: "test" });
+      const result = rulesOf(validator)({
+        rules: "test",
+      });
 
       // asserts
       expect(result).to.deep.equal(expected);
