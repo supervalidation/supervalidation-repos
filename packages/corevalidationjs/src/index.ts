@@ -1,4 +1,4 @@
-export { FailedValidateError, InvalidConstraintError, InvalidConstraintRulesError, UndefinedValidatorError } from "./Errors";
+export { FailedValidateError, InvalidConstraintError, UndefinedValidatorError } from "./Errors";
 export { ConstraintsUtil } from "./ConstraintsUtil";
 export { IConstraint, IConstraints, IValidatorOptions, RulesValue } from "./IConstraints";
 export { IValidateDescription } from "./IValidateDescription";

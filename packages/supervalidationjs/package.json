@@ -1,6 +1,6 @@
 {
   "name": "supervalidationjs",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Not just another Validation library!",
   "main": "./lib/index.js",
   "typings": "./typings/index.d.ts",
@@ -34,7 +34,7 @@
   "license": "MIT",
   "repository": "git+https://github.com/supervalidation/supervalidation-repos",
   "dependencies": {
-    "corevalidationjs": "^0.0.12"
+    "corevalidationjs": "^0.0.13"
   },
   "devDependencies": {
     "archdevts": "20.8.2"
