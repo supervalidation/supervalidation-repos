@@ -2,8 +2,8 @@ import { expect } from "chai";
 import { IConstraints, ValidationUtil } from "corevalidationjs";
 import { typeOf } from "./index";
 
-describe("typeof.ts tests", () => {
-  describe("#typeof validator", () => {
+describe("typeOf.ts tests", () => {
+  describe("#typeOf validator", () => {
     it("expect to validate a valid result, #1", async () => {
       // arranges
       const attributes = {

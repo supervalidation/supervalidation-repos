@@ -2,7 +2,7 @@ import { IValidator } from "corevalidationjs";
 
 export type typeOfRules = string | string[];
 
-export const typeOf: IValidator<string | string[]> = {
+export const typeOf: IValidator<typeOfRules> = {
   message: (name, rules) => Array.isArray(rules) ?
     `[${name}] must be a type of [${rules.join(", ")}].` :
     `[${name}] must be a type of [${rules}].`,

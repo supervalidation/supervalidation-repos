@@ -19,8 +19,10 @@ shell.rm('-rf', 'typings');
 // REMOVE OUTPUT DIRECTORY
 [
   'adapters',
+  'either',
   'inEmailFormat',
   'inStringLength',
   'isRequired',
+  'oneOf',
   'typeOf',
 ].forEach(each => shell.rm('-rf', `./${each}`));

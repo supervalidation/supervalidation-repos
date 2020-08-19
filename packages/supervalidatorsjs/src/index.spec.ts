@@ -16,12 +16,16 @@ describe("index.ts tests", () => {
       // arranges
       const properties = [
         "adapters",
+        "either",
+        "eitherRules",
         "inEmailFormat",
         "inEmailFormatRules",
         "inStringLength",
         "inStringLengthRules",
         "isRequired",
         "isRequiredRules",
+        "oneOf",
+        "oneOfRules",
         "typeOf",
         "typeOfRules",
         "Validators",
@@ -41,9 +45,11 @@ describe("index.ts tests", () => {
     it("expect SuperValidatorsJS.Validators to contain all defined keys", async () => {
       // arranges
       const properties = [
+        "either",
         "inEmailFormat",
         "inStringLength",
         "isRequired",
+        "oneOf",
         "typeOf",
       ];
 
