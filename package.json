@@ -5,7 +5,7 @@
     "init": "lerna init",
     "setup": "lerna bootstrap",
     "build": "lerna run build",
-    "release": "lerna publish --force-publish"
+    "release": "lerna publish --force-publish --exact"
   },
   "devDependencies": {
     "lerna": "3.22.1"

@@ -37,7 +37,7 @@
     "corevalidationjs": "^0.0.14"
   },
   "devDependencies": {
-    "archdevts": "20.8.2"
+    "archdevts": "21.1.1"
   },
   "nyc": {
     "extension": [

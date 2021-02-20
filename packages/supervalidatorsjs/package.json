@@ -37,9 +37,9 @@
     "corevalidationjs": "^0.0.14"
   },
   "devDependencies": {
-    "@types/validator": "13.1.0",
-    "archdevts": "20.8.2",
-    "validator": "13.1.1"
+    "@types/validator": "13.1.3",
+    "archdevts": "21.1.1",
+    "validator": "13.5.2"
   },
   "nyc": {
     "include": [
